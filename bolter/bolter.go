@@ -60,7 +60,6 @@ func GetAll(property string) string {
 		tx.CreateBucketIfNotExists([]byte(property))
 
 		bucket := tx.Bucket([]byte(property))
-		log.Println(bucket)
 		cursor := bucket.Cursor()
 
 		for k, v := cursor.First(); k != nil; k, v = cursor.Next() {
