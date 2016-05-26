@@ -53,5 +53,7 @@ func main() {
 		return c.HTML(http.StatusOK, value)
 	})
 
+	//TODO app ui
+
 	e.Run(standard.New(":1323"))
 }
