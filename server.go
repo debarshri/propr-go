@@ -1,10 +1,10 @@
 package main
 
 import (
+	"./bolter"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/standard"
 	"net/http"
-	"./bolter"
 )
 
 func main() {
@@ -29,7 +29,7 @@ func main() {
 		key := c.Param("key")
 		value := c.Param("value")
 
-		bolter.Put(appname,key,value)
+		bolter.Put(appname, key, value)
 
 		return c.HTML(http.StatusOK, "Done")
 	})
@@ -39,7 +39,7 @@ func main() {
 		appname := c.Param("appname")
 		key := c.Param("key")
 
-		value := bolter.Get(appname,key)
+		value := bolter.Get(appname, key)
 
 		return c.HTML(http.StatusOK, value)
 	})

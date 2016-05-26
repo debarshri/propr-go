@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-func Create(property string){
+func Create(property string) {
 	db := open()
 	defer db.Close()
 
@@ -22,7 +22,7 @@ func Put(property string, key string, value string) {
 
 	db.Update(func(tx *bolt.Tx) error {
 
-		propr := []byte(property);
+		propr := []byte(property)
 
 		tx.CreateBucketIfNotExists(propr)
 
@@ -32,7 +32,7 @@ func Put(property string, key string, value string) {
 	})
 }
 
-func Get(property string, key string) (string){
+func Get(property string, key string) string {
 
 	db := open()
 	defer db.Close()
@@ -49,8 +49,7 @@ func Get(property string, key string) (string){
 	return value
 }
 
-
-func GetAll(property string) (string){
+func GetAll(property string) string {
 
 	db := open()
 	defer db.Close()
@@ -65,7 +64,7 @@ func GetAll(property string) (string){
 		cursor := bucket.Cursor()
 
 		for k, v := cursor.First(); k != nil; k, v = cursor.Next() {
-			value = value + string(k) +"="+ string(v) +"\n"
+			value = value + string(k) + "=" + string(v) + "\n"
 		}
 
 		return nil
@@ -74,9 +73,7 @@ func GetAll(property string) (string){
 	return value
 }
 
-
-
-func open() (db *bolt.DB){
+func open() (db *bolt.DB) {
 
 	db, err := bolt.Open("config.db", 0600, nil)
 	if err != nil {
@@ -84,5 +81,3 @@ func open() (db *bolt.DB){
 	}
 	return db
 }
-
-
