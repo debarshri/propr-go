@@ -2,25 +2,43 @@ package bolter
 
 import (
 	"github.com/boltdb/bolt"
+	"fmt"
 	"log"
 )
 
-func Create(property string) {
-	db := open()
-	defer db.Close()
+type Bolter struct{
+	database *bolt.DB
+}
 
-	db.Update(func(tx *bolt.Tx) error {
+func New()(*Bolter){
+
+	db := instance();
+	b := &Bolter{database : db}
+	return b
+
+}
+
+func instance() (database *bolt.DB) {
+
+	db, err := bolt.Open("config.db", 0600, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return db
+}
+
+func (b *Bolter) Create(property string) {
+
+	b.database.Update(func(tx *bolt.Tx) error {
 		tx.CreateBucketIfNotExists([]byte(property))
 		return nil
 	})
 }
 
-func Put(property string, key string, value string) {
+func (b *Bolter) Put(property string, key string, value string) {
 
-	db := open()
-	defer db.Close()
-
-	db.Update(func(tx *bolt.Tx) error {
+	b.database.Update(func(tx *bolt.Tx) error {
 
 		propr := []byte(property)
 
@@ -32,15 +50,16 @@ func Put(property string, key string, value string) {
 	})
 }
 
-func Get(property string, key string) string {
-
-	db := open()
-	defer db.Close()
+func (b *Bolter) Get(property string, key string) string {
 
 	var value string
 
-	db.View(func(tx *bolt.Tx) error {
+	b.database.View(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte(property))
+		if b == nil {
+			fmt.Println("Works")
+			value = ""
+		}
 		v := b.Get([]byte(key))
 		value = string(v[:])
 		return nil
@@ -49,14 +68,11 @@ func Get(property string, key string) string {
 	return value
 }
 
-func GetAll(property string) string {
-
-	db := open()
-	defer db.Close()
+func (b *Bolter) GetAll(property string) string {
 
 	var value string
 
-	db.View(func(tx *bolt.Tx) error {
+	b.database.View(func(tx *bolt.Tx) error {
 		tx.CreateBucketIfNotExists([]byte(property))
 
 		bucket := tx.Bucket([]byte(property))
@@ -72,11 +88,7 @@ func GetAll(property string) string {
 	return value
 }
 
-func open() (db *bolt.DB) {
 
-	db, err := bolt.Open("config.db", 0600, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return db
+func (b *Bolter) Close(){
+	b.database.Close();
 }
