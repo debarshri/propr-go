@@ -39,6 +39,15 @@ func main() {
 		return c.HTML(http.StatusOK, "Done")
 	})
 
+	e.Post("/delete/:appname", func(c echo.Context) error {
+
+		app_name := c.Param("appname")
+
+		b.Delete(app_name)
+
+		return c.HTML(http.StatusOK, "Done")
+	})
+
 	e.Post("/add/:appname/:key/:value", func(c echo.Context) error {
 
 		app_name := c.Param("appname")

@@ -36,6 +36,14 @@ func (b *Bolter) Create(property string) {
 	})
 }
 
+func (b *Bolter) Delete(property string) {
+
+	b.database.Update(func(tx *bolt.Tx) error {
+		tx.DeleteBucket([]byte(property))
+		return nil
+	})
+}
+
 func (b *Bolter) Put(property string, key string, value string) {
 
 	b.database.Update(func(tx *bolt.Tx) error {
