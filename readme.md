@@ -25,4 +25,13 @@ would give
 
 `key1=value1`
 
+It also has a UI in localhost:1323
+
+
+However,
+
+### TODO
+Create a cluster of boltdb databases with common rpc functions for get put delete create based on Bloomfiltering on keys.
+Working on it, bitches.
+
 

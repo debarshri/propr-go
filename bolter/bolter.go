@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/boltdb/bolt"
 	"log"
+	"container/list"
 )
 
 type Bolter struct {
@@ -88,6 +89,26 @@ func (b *Bolter) GetAll(property string) string {
 
 		for k, v := cursor.First(); k != nil; k, v = cursor.Next() {
 			value = value + string(k) + "=" + string(v) + "\n"
+		}
+
+		return nil
+	})
+
+	return value
+}
+
+func (b *Bolter) GetAllAsList(property string) *list.List {
+
+	var value = list.New()
+
+	b.database.View(func(tx *bolt.Tx) error {
+		tx.CreateBucketIfNotExists([]byte(property))
+
+		bucket := tx.Bucket([]byte(property))
+		cursor := bucket.Cursor()
+
+		for k, _ := cursor.First(); k != nil; k, _ = cursor.Next() {
+			value.PushBack(string(k))
 		}
 
 		return nil
