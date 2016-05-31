@@ -1,19 +1,19 @@
 package bolter
 
 import (
-	"github.com/boltdb/bolt"
 	"fmt"
+	"github.com/boltdb/bolt"
 	"log"
 )
 
-type Bolter struct{
+type Bolter struct {
 	database *bolt.DB
 }
 
-func New()(*Bolter){
+func New() *Bolter {
 
-	db := instance();
-	b := &Bolter{database : db}
+	db := instance()
+	b := &Bolter{database: db}
 	return b
 
 }
@@ -88,7 +88,6 @@ func (b *Bolter) GetAll(property string) string {
 	return value
 }
 
-
-func (b *Bolter) Close(){
-	b.database.Close();
+func (b *Bolter) Close() {
+	b.database.Close()
 }

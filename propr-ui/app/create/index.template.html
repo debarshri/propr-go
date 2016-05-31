@@ -1,0 +1,18 @@
+
+<div class="container">
+
+    <h1>Propr UI</h1>
+
+    <div ng-controller="ExampleController" class="form-group">
+        <form novalidate >
+            <legend>App Name</legend>
+
+            <input type="text" ng-model="user.property" class="form-control" placeholder="property name" /><br />
+            <input type="button" ng-click="search(user)" value="Search" class="btn btn-default" />
+            <input type="button" ng-click="reset()" value="Reset" class="btn btn-default"/>
+
+        </form>
+        <pre ng-model="result">{{result.property}}</pre>
+    </div>
+
+</div>

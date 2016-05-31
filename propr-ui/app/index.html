@@ -1,0 +1,32 @@
+<html ng-app="propr-app">
+<head>
+    <head>
+        <meta charset="utf-8">
+        <title>My HTML File</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-route.js"></script>
+        <script src="/app.js"></script>
+    </head>
+</head>
+
+<body>
+
+
+<div class="container">
+    <h1>Propr UI</h1>
+    <br />
+    <div class="row">
+    <a href="/#!/create-property" class="btn btn-default">Create Property</a>
+    <a href="/#!/put-value" class="btn btn-default">Put value</a>
+    <a href="/#!/" class="btn btn-default">Search</a>
+    </div>
+
+    <br />
+    <div class="row">
+        <div ng-view></div>
+    </div>
+</div>
+
+</body>
+</html>

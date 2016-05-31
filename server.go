@@ -5,6 +5,7 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/standard"
 	"net/http"
+	"io/ioutil"
 )
 
 func main() {
@@ -13,7 +14,20 @@ func main() {
 	b := bolter.New();
 
 	e.Get("/", func(c echo.Context) error {
-		return c.HTML(http.StatusOK, "Propr")
+
+		b, err := ioutil.ReadFile("propr-ui/app/index.html")
+		if err != nil {
+			panic(err)
+		}
+
+		s := string(b[:])
+
+		return c.HTML(http.StatusOK, s)
+	})
+
+	e.Get("/app.js", func(c echo.Context) error {
+
+		return c.File("propr-ui/app/app.js")
 	})
 
 	e.Post("/create/:appname", func(c echo.Context) error {
@@ -45,6 +59,7 @@ func main() {
 
 		return c.HTML(http.StatusOK, value)
 	})
+
 
 	e.Get("/get/:appname", func(c echo.Context) error {
 
