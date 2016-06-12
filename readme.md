@@ -1,7 +1,7 @@
 #### Propr
 
 A "key/value" property server written in go.
-
+Uses bolt db
 
 ##### To build and run
 ./build.sh
